@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="insideWarConfig" status="warn" monitorInterval="30"
+	charset="UTF-8">
+	<Appenders>
+		<RollingFile name="fileLogger"
+			fileName="/path/to/logfiles/log4J-playground_ms/log_insideWarConfig.log"
+			filePattern="/path/to/logfiles/log4J-playground_ms/log_insideWarConfig.log-%d{yyyy-MM-dd}.%i">
+			<PatternLayout>
+				<pattern>%d{dd.MM HH:mm:ss} %-5p: %msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="5MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5">
+				<Delete
+					basePath="/path/to/logfiles/log4J-playground_ms/"
+					maxDepth="1">
+					<IfFileName glob="*log*" />
+					<IfLastModified age="P5D" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{dd.MM HH:mm:ss} %-5p: %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="info" additivity="false">
+			<appender-ref ref="fileLogger" />
+			<appender-ref ref="console" />
+		</Root>
+	</Loggers>
+</Configuration>
